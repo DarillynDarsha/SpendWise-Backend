@@ -1,0 +1,25 @@
+# =====================================
+# SPENDWISE - DOCKER IGNORE
+# =====================================
+
+# Git files
+.git
+.gitignore
+
+# Local configuration containing credentials
+src/main/resources/application.properties
+
+# Build output
+target/
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

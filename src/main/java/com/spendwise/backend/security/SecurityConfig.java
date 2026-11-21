@@ -57,26 +57,43 @@ public DaoAuthenticationProvider authenticationProvider() {
         return configuration.getAuthenticationManager();
     }
 
-    // CORS configuration for React frontend
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
+    // =====================================
+// CORS CONFIGURATION
+// Allow Localhost + Vercel Frontend
+// =====================================
 
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
-        configuration.setAllowedMethods(
-                List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")
-        );
-        configuration.setAllowedHeaders(
-                List.of("Authorization", "Content-Type")
-        );
+@Bean
+public CorsConfigurationSource corsConfigurationSource() {
 
-        UrlBasedCorsConfigurationSource source =
-                new UrlBasedCorsConfigurationSource();
+    CorsConfiguration configuration = new CorsConfiguration();
 
-        source.registerCorsConfiguration("/**", configuration);
+    // Allowed frontend origins
+    configuration.setAllowedOrigins(List.of(
+            "http://localhost:5173",
+            "https://spend-wise-qrj1wev01-darillyn-s-projects.vercel.app",
+            "https://spend-wise-beta-coral.vercel.app"
+    ));
 
-        return source;
-    }
+    // Allowed HTTP methods
+    configuration.setAllowedMethods(
+            List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")
+    );
+
+    // Allowed request headers
+    configuration.setAllowedHeaders(
+            List.of("Authorization", "Content-Type")
+    );
+
+    // Allow JWT credentials and authorization headers
+    configuration.setAllowCredentials(true);
+
+    UrlBasedCorsConfigurationSource source =
+            new UrlBasedCorsConfigurationSource();
+
+    source.registerCorsConfiguration("/**", configuration);
+
+    return source;
+}
 
     // Main security configuration
     @Bean
